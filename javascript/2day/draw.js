@@ -67,8 +67,8 @@ function onKeyUp(event){
 window.requestAnimationFrame(run);
 
 function run(){
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    // context.fillStyle = 'white';
+    // context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.drawImage(image,x,y);
     
