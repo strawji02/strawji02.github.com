@@ -1,115 +1,102 @@
-const canvas = document.getElementById('a');
-const context = canvas.getContext('2d');
+const canvas = document.getElementById('a')
+const context = canvas.getContext('2d')
 
-context.font='50px Arial';
-context.strokeStyle = 'red';
-context.textBaseline = 'alphabetic';
-// context.strokeText('Hello, world!', 10, 70);
+// context.font = '30px Arial'
+// context.textBaseline = 'alphabetic';
+
+// context.strokeStyle='red';
+// context.fillStyle='blue'
+// context.fillText("p", 10, 20);
+// context.textBaseline = 'Middle';
+// context.strokeText("otato", 27, 20);
 
 const image = new Image();
 image.src = 'hos.png';
-
 let x = 0;
 let y = 0;
 
-image.addEventListener('load', function() {
-    console.log(arguments);
-    console.log(event);
-    context.drawImage(image, x, y, 100, 100);
-    
-});
-//방법1. 단순한 방법(이벤트 리스너만 사용)
-// window.addEventListener('keydown', function(event){
-//     //console.log(event);
-    
+image.addEventListener('load', function(){
+    console.log(arguments)
+    context.drawImage(image, x, y);
+})
+
+// window.addEventListener('keydown', function(evnet)
+// {
+//     console.log(event)
+
 //     context.fillStyle = 'white';
-//     context.fillRect(0,0,canvas.width, canvas.height);
+//     context.fillRect(0, 0, canvas.width, canvas.height)
 
-//     switch(event.code){
-//         case 'ArrowRight':
-//         x+= 10;
-//         break;
+//     // switch(event.code){
+//     //     case 'ArrowRight': x += 10; break;
+//     //     case 'ArrowLeft' : x -= 10; break;
+//     //     case 'ArrowDown' : y += 10; break;
+//     //     case 'ArrowUp' : y -= 10; break;
+//     // }
 
-//         case 'ArrowLeft':
-//         x-= 10;
-//         break;
-
-//         case 'ArrowUp':
-//         y-= 10;
-//         break;
-
-//         case 'ArrowDown':
-//         y+= 10;
-//         break;
-        
-
-//     }
-    
-
+//    
 //     context.drawImage(image, x, y);
-// })
+// });
 
-//방법 2. 키보드 이벤트 + 배열 사용
-
-let downKeys = {};
-
+//방법2. 키보드 이벤트 + 배열사용
+let downKey = {};
+let msd = false;
 window.addEventListener('keydown', onKeyDown);
 window.addEventListener('keyup', onKeyUp);
 
 function onKeyDown(event){
-    downKeys[event.code] = true;
+    downKey[event.code] = true;
 }
-
 function onKeyUp(event){
-    downKeys[event.code]=false;
+    downKey[event.code] = false;
 }
 
 window.requestAnimationFrame(run);
 
 function run(){
-    // context.fillStyle = 'white';
-    // context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = 'black';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, x, y);
 
-    context.drawImage(image,x,y);
-    
-    if(downKeys['ArrowLeft'])
+    if(downKey['ArrowLeft'])
         x -= 10;
-    if(downKeys['ArrowRight'])
+    else if(downKey['ArrowRight'])
         x += 10;
-    if(downKeys['ArrowUp'])
+    if(downKey['ArrowUp'])
         y -= 10;
-    if(downKeys['ArrowDown'])
+    else if(downKey['ArrowDown'])
         y += 10;
-    if(x >= 800)
-        x = 0;
-    if(y >= 800)
-        y = 0;
-    if(x < 0)
-        x = 800;
-    if (y < 0)
-        y = 800;
+
     window.requestAnimationFrame(run);
 }
 
-// function getMousePosition(event){
-//     const rect=canvas.getBoundingClientRect();
-//     return{
-//         x:event.clientX - rect.left,
-//         y:event.clientY - rect.top
-//     }
-// }
-// function moveImage(event){
-//     window.addEventListener('mousemove', function(){
-//         console.log(event);
-//         let a = getMousePosition(event);
-//         x = a.x;
-//         y = a.y;
-//         context.drawImage(image, x, y, 100, 100);
-//     })
-// }
-// window.addEventListener('mousedown', function(event){
-//     let can = getMousePosition(event);
-//     console.log({x : event.clientX, y : event.clientY});
-//     // if((can.x >= x && can.x <= x + 100) && (can.y >= y && can.y <= y+100)){
-//     moveImage(event);
-// })
+function getMousePosition(event)
+{
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x:event.clientX - rect.left,
+        y:event.clientY - rect.top
+    }
+}
+//마우스
+window.addEventListener('mousedown', function(event){
+    if(getMousePosition(event).x >= x){
+        if(getMousePosition(event).x <= x+191)
+            if(getMousePosition(event).y >= y)
+                if(getMousePosition(event).y <= y+264)
+                    msd = true;
+    }
+})
+
+window.addEventListener('mousemove', function(event){
+    if(msd == true){
+        x = getMousePosition(event).x
+        y = getMousePosition(event).y
+    }
+    console.log("a");
+})
+
+window.addEventListener('mouseup', function(event){
+    msd = false;
+    console.log("b");
+})
