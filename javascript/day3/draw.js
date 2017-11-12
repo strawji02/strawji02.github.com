@@ -29,7 +29,7 @@ function GameObject(src, width, height, speed){
 }
 
 const player = new GameObject('hos.png', 100, 100, 10);
-const obstacle = new GameObject('hos.png', 150,150);
+const obstacle = new GameObject('hos.png', 150,150);2
 const objectArray = [];
 
 objectArray.push(player);
@@ -87,7 +87,7 @@ function run(){
     if(player.x >= 800)
         player.x = 0;
     if(player.y >= 800)
-        player.y = 0;
+        player.y = 0;++
     if(player.x < 0)
         player.x = 800;
     if(player.y < 0)
